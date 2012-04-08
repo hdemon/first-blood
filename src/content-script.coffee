@@ -66,8 +66,8 @@ divide_into_pieces = (length_of_side) ->
 
 class Original
   constructor: () ->
-    this.render()
-    this.context = document.getElementsByTagName('canvas')[0].getContext('2d')
+    @render()
+    @context = document.getElementsByTagName('canvas')[0].getContext('2d')
 
   render: () ->
     $canvas
@@ -103,20 +103,20 @@ class Original
     $body.append(temp_canvas.join(""))
 
     itelator((id, x, y) ->
-      piece[id] = new Piece(this.image_data, id, x, y)
+      piece[id] = new Piece(@image_data, id, x, y)
     )
 
   image_data: (x, y) ->
-    this.context.getImageData(x, y, length_of_side, length_of_side)
+    @context.getImageData(x, y, length_of_side, length_of_side)
 
 class Piece
   length_of_side: length_of_side
   constructor: (@image_data, @id, @x, @y) ->
-    this.rotating_angle = 0
-    this.shooted = false
-    this.context = document.getElementById("tmp_#{this.id}").getContext('2d')
+    @rotating_angle = 0
+    @shooted = false
+    @context = document.getElementById("tmp_#{@id}").getContext('2d')
 
-    this.context.putImageData(original_canvas.image_data(x, y, length_of_side), 0, 0)
+    @context.putImageData(original_canvas.image_data(x, y, length_of_side), 0, 0)
     $(piece)
       .css({
         position: "absolute",
