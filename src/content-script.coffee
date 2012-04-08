@@ -22,47 +22,7 @@ initialize = () ->
   $window.unbind()
   original_canvas = new Original()
   original_canvas.divide_into_pieces(length_of_side)
-  get_all_contents()
 
-
-get_original_canvas_context = () ->
-  document.getElementsByTagName('canvas')[0].getContext('2d')
-
-get_canvas_context = (id) ->
-  document.getElementById("tmp_#{id}").getContext('2d')
-
-get_all_contents = () ->
-  for id in id_total
-    do (id) ->
-      canvas_context[id] = get_canvas_context(id)
-
-
-image_data = (x, y, length_of_side) ->
-  original_canvas_context ||= get_original_canvas_context()
-  original_canvas_context.getImageData(x, y, length_of_side, length_of_side)
-
-divide_into_pieces = (length_of_side) ->
-  temp_canvas = []
-
-  itelator = `function(callback) {
-    var id = 0;
-    for (var y = 0, max_y = $canvas.height(); y < max_y; y = y + length_of_side) {
-      for (var x = 0, max_x = $canvas.width(); x < max_x; x = x + length_of_side) {
-        callback(id, x, y);
-        id = id + 1;
-      }
-    }
-    id_total = id
-  };`
-
-  itelator((id) ->
-    temp_canvas.push("<canvas id=\"tmp_#{id}\" width=\"#{length_of_side}\" height=\"#{length_of_side}\" />")
-  )
-  $body.append(temp_canvas.join(""))
-
-  itelator((id, x, y) ->
-    piece[id] = new Piece(image_data, id, x, y)
-  )
 
 class Original
   constructor: () ->
@@ -108,6 +68,7 @@ class Original
 
   image_data: (x, y) ->
     @context.getImageData(x, y, length_of_side, length_of_side)
+
 
 class Piece
   length_of_side: length_of_side

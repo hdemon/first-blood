@@ -1,5 +1,5 @@
 (function() {
-  var $body, $canvas, $window, Original, Piece, canvas, canvas_context, context, divide_into_pieces, get_all_contents, get_canvas_context, get_original_canvas_context, id_total, image_data, initialize, length_of_side, original_canvas, original_canvas_context, piece;
+  var $body, $canvas, $window, Original, Piece, canvas, canvas_context, context, id_total, initialize, length_of_side, original_canvas, original_canvas_context, piece;
 
   $window = $('window');
 
@@ -35,55 +35,7 @@
   initialize = function() {
     $window.unbind();
     original_canvas = new Original();
-    original_canvas.divide_into_pieces(length_of_side);
-    return get_all_contents();
-  };
-
-  get_original_canvas_context = function() {
-    return document.getElementsByTagName('canvas')[0].getContext('2d');
-  };
-
-  get_canvas_context = function(id) {
-    return document.getElementById("tmp_" + id).getContext('2d');
-  };
-
-  get_all_contents = function() {
-    var id, _i, _len, _results;
-    _results = [];
-    for (_i = 0, _len = id_total.length; _i < _len; _i++) {
-      id = id_total[_i];
-      _results.push((function(id) {
-        return canvas_context[id] = get_canvas_context(id);
-      })(id));
-    }
-    return _results;
-  };
-
-  image_data = function(x, y, length_of_side) {
-    original_canvas_context || (original_canvas_context = get_original_canvas_context());
-    return original_canvas_context.getImageData(x, y, length_of_side, length_of_side);
-  };
-
-  divide_into_pieces = function(length_of_side) {
-    var itelator, temp_canvas;
-    temp_canvas = [];
-    itelator = function(callback) {
-    var id = 0;
-    for (var y = 0, max_y = $canvas.height(); y < max_y; y = y + length_of_side) {
-      for (var x = 0, max_x = $canvas.width(); x < max_x; x = x + length_of_side) {
-        callback(id, x, y);
-        id = id + 1;
-      }
-    }
-    id_total = id
-  };;
-    itelator(function(id) {
-      return temp_canvas.push("<canvas id=\"tmp_" + id + "\" width=\"" + length_of_side + "\" height=\"" + length_of_side + "\" />");
-    });
-    $body.append(temp_canvas.join(""));
-    return itelator(function(id, x, y) {
-      return piece[id] = new Piece(image_data, id, x, y);
-    });
+    return original_canvas.divide_into_pieces(length_of_side);
   };
 
   Original = (function() {
