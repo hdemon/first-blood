@@ -1,0 +1,9 @@
+{
+  "name": "first-Bblood",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "coffee-script": ">= 0.0.1",
+    "js2coffee": ">= 0.0.1"
+  }
+}
