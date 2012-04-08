@@ -4,7 +4,7 @@
   "manifest_version": 1,
   "description": "first blood",
   "browser_action": {
-    "default_icon": "/src/icon.png"
+    "default_icon": "/assets/icon.png"
   },
   "permissions": [
     "http://*/*"
@@ -12,13 +12,12 @@
   "content_scripts": [
     {
       "matches": ["http://www.jcmo.zaq.ne.jp/*"],
-      "css": ["assets/style.css"],
+      "css": ["src/style.css"],
       "js": [
         "lib/jquery-1.7.2.min.js",
         "lib/html2canvas.js",
         "lib/jquery.plugin.html2canvas.js",
-        "lib/three.js/build/Three.js",
-        "content-script.js"
+        "src/content-script.js"
       ]
     }
   ]
