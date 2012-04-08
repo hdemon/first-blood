@@ -33,9 +33,16 @@
   });
 
   initialize = function() {
+    var p, _i, _len, _results;
     $window.unbind();
     original_canvas = new Original();
-    return original_canvas.divide_into_pieces(length_of_side);
+    original_canvas.divide_into_pieces(length_of_side);
+    _results = [];
+    for (_i = 0, _len = piece.length; _i < _len; _i++) {
+      p = piece[_i];
+      _results.push(p.rotate(45));
+    }
+    return _results;
   };
 
   Original = (function() {
@@ -54,7 +61,7 @@
       return $body.append(canvas);
     };
 
-    Original.prototype.get_content = function() {
+    Original.prototype.get_context = function() {
       return document.getElementsByTagName('canvas')[0].getContext('2d');
     };
 
@@ -107,6 +114,13 @@
         top: y
       });
     }
+
+    Piece.prototype.rotate = function(degree) {
+      original_canvas.context.translate(original_canvas.width, this.y);
+      original_canvas.context.rotate(degree * Math.PI / 180);
+      original_canvas.context.drawImage(this.context.canvas, this.x, this.y, length_of_side, length_of_side);
+      return original_canvas.context.translate(-this.x, -this.y);
+    };
 
     Piece.prototype.render = function() {
       canvas_context || (canvas_context = canvas_context());

@@ -22,7 +22,7 @@ initialize = () ->
   $window.unbind()
   original_canvas = new Original()
   original_canvas.divide_into_pieces(length_of_side)
-
+  p.rotate(45) for p in piece
 
 class Original
   constructor: () ->
@@ -40,7 +40,7 @@ class Original
       .toggle()
     $body.append(canvas)
 
-  get_content: () ->
+  get_context: () ->
     document.getElementsByTagName('canvas')[0].getContext('2d')
 
   divide_into_pieces: () ->
@@ -84,6 +84,12 @@ class Piece
         left: x,
         top:  y
       })
+
+  rotate: (degree) ->
+    original_canvas.context.translate(original_canvas.width, @y)
+    original_canvas.context.rotate(degree * Math.PI / 180)
+    original_canvas.context.drawImage(@context.canvas, @x, @y, length_of_side, length_of_side)
+    original_canvas.context.translate(-@x, -@y)
 
   render: () ->
     canvas_context ||= canvas_context()
